@@ -1,7 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:ft_time/src/home.dart';
+import './src/home.dart';
+
 
 
 
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: fr(),
+      home: home(),
     );
   }
 }
@@ -56,134 +57,9 @@ class MyApp extends StatelessWidget {
 // }
 
 
-class fr extends StatefulWidget {
-
-  @override
-  State createState() => _MyHomePageState();
-}
-
-
-class _MyHomePageState extends State<fr> {
-
-  TextEditingController editController = new TextEditingController();
-
-  Future<String> getData() async {
-    http.Response response = await http.get(
-      Uri.encodeFull('http://google.com'),
-      headers: {"Accept": "application/json"}
-    );
-
-    print(response.headers);
-  }
-
-  goSecondPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SecondRoute(url: this.editController.text
-      )),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Container(
-              width: 300,
-              child: TextField(
-                  controller: editController,
-                  textAlign: TextAlign.left,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    // labelText: 'Hint',
-                  )
-              )
-            ),
-            RaisedButton(onPressed: () { this.goSecondPage(); }, child: Text('RaisedButton')),
-          ],
-        ),
-      ),
-    );
-  }
-
-
-}
-
-
-
-
-class FirstRoute extends StatelessWidget {
-
-  Future<String> getData() async {
-    http.Response response = await http.get(
-        Uri.encodeFull('http://google.com'),
-        headers: {"Accept": "application/json"}
-    );
-
-    String time = "";
-
-    response.headers.forEach((key, value) {
-      if(key == "date") {
-        time = value;
-      }
-    });
-    return time;
-  }
 
 
 
 
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('First Route'),
-      // ),
-      body: Center(
 
-        child: RaisedButton(
-          child: Text('Open route'),
-          onPressed: () {
-            // String time = getData();
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SecondRoute(url: "j")),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class SecondRoute extends StatelessWidget {
-
-  final String url;
-
-  SecondRoute({Key key, @required this.url}) : super(key: key);
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Second Route"),
-      // ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            Container(
-                width: 300,
-                child: Text('$url 의 서버시간')
-            ),
-            // RaisedButton(onPressed: () { this.goSecondPage(); }, child: Text('RaisedButton')),
-          ],
-        ),
-      ),
-    );
-  }
-}
