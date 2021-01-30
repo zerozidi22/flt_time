@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:date_format/date_format.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,12 +18,25 @@ class second extends StatefulWidget {
 
 class _secondState extends State<second>{
 
+  static MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    keywords: <String>['flutter', 'firebase', 'admob'],
+    testDevices: <String>[],
+  );
+
+  BannerAd bannerAd = BannerAd(
+    adUnitId: BannerAd.testAdUnitId,
+    size: AdSize.banner,
+    targetingInfo: targetingInfo,
+    listener: (MobileAdEvent event) {
+      print("BannerAd event is $event");
+    },
+  );
+
   DateTime time = DateTime.now().add((new Duration(hours: 9)));
   var timer;
 
   Future<DateTime> getData() async {
 
-    print("hi");
     http.Response response = await http.get(
         Uri.encodeFull('http://naver.com'),
         headers: {"Accept": "application/json"}
@@ -49,6 +63,9 @@ class _secondState extends State<second>{
   @override
   void initState(){
     getData();
+    FirebaseAdMob.instance.initialize(
+        appId: 'ca-app-pub-8632141287861541/3087954305'); // Android Test App ID
+    bannerAd..load()..show();
     super.initState();
   }
 
@@ -56,17 +73,26 @@ class _secondState extends State<second>{
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
+            backgroundColor: Colors.white,
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget> [
                   Container(
+                      child: SizedBox(
+                          height: 150,
+                          width: 150,
+                          child: Image.asset('assets/img/time.gif')
+                      )
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(top: 50.0),
                     child: Text(
-                        widget.url + "의 서버 시간",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                      widget.url + "의 서버 시간",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
                     ),
                   ),
                   Container(
@@ -86,7 +112,7 @@ class _secondState extends State<second>{
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text('고고!', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.white )),
+                        child: Text('다시', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18, color: Colors.white )),
                       )
                   )
                 ],
