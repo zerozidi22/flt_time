@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "359901986904",
+    "project_id": "flt-time",
+    "storage_bucket": "flt-time.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359901986904:android:7410f89c5888c5a9e64a2d",
+        "android_client_info": {
+          "package_name": "com.happyWatter.ft_time"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359901986904-njps4sh6to7mmdd2e8tiak56l5tqmjol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVLYS0ae7CKcsthiTWvRJE0t4GDNYe1EQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "359901986904-njps4sh6to7mmdd2e8tiak56l5tqmjol.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
